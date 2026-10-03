@@ -1,0 +1,234 @@
+</> CSS
+
+   html{}
+
+   * {
+    box-sizing: border-box;
+   }
+    
+    body {
+        background-color: pink;
+        font-family: cursive, sans-serif;
+    }
+
+    h1 {
+        color: darkgreen;
+        font-size: 35px;
+        text-align: center;
+        text-shadow: 2px 2px 3px gray;
+    }
+    h2{
+        color: darkgreen;
+        font-size: 22px;
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 15px;
+    }
+    h2:hover {
+        color: darkcyan;
+        transform: scale(1.05);
+    }
+
+
+    p {
+        color: darkcyan;
+        font-family: Gill Sans;
+        font-size: 20px;
+        margin-bottom: 25px;
+        line-height: 1.6;
+        text-align: center;
+    }
+
+    img {
+        display: block;
+        width: 300px;
+        max-width: 100%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 15px;
+        border: 3px solid darkgreen;
+        box-shadow: 3px 3px 8px gray;
+        transition: transform 0.3s ease;       
+    }
+
+    img:hover {
+        transform: scale(2.05);
+    }
+
+    
+    .content{
+        background-color: lightcyan;
+        border: 2px solid red;
+        padding: 20px;
+        border-radius: 50px;
+        width: 90%;
+        max-width: 700px;
+        margin: 20px auto;
+    }
+
+    .box {
+    background-color: white;
+    border: 2px solid red;
+    padding: 30px;
+    border-radius: 30px;
+    width: 90%;
+    max-width: 700px;
+    margin: 30px auto;
+    box-shadow: 5px 5px 10px black;
+    transition: transform 0.3s ease;
+    }
+.box:hover {
+    transform: translateY(-5px);
+    
+
+
+}
+
+    a {
+        display: block;
+        width: fit-content;
+        margin: 20px auto;
+        background-color: darkgreen;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;        
+    }
+
+    a:hover{background-color: darkcyan;}
+
+    nav {
+        text-align: center;
+        margin: 20px 0;
+        background-color: darkgreen;
+        padding: 10px;
+        border-radius: 10px;
+    } 
+    nav a{
+        display: inline-block;
+        margin: 0 10px;
+        background-color: transparent;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+    #about{
+        background-color: white;
+        border: 2px solid darkgreen;
+        padding: 20px;
+        margin: 100px auto;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 3px 3px 8px gray;
+        transition: transform 0.3s ease;
+    }
+    #about:hover {
+        transform: translateY(-5px)
+    }
+    #gallery{
+        background-color: white;
+        border: 2px solid darkgreen;
+        padding: 20px;
+        margin: 100px auto;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 3px 3px 8px gray;
+        
+    }
+    #contact{
+        background-color: white;
+        border: 2px solid darkgreen;
+        padding: 20px;
+        margin: 100px auto;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 3px 3px 8px gray;
+    
+    }
+     #gallery {
+                text-align: center;
+            }
+            #gallery img {
+                display: inline-block;
+                width: 45%;
+                max-width: 250px;
+                margin: 10px;
+            }
+    .gallery-images {
+        display:flex;
+        justify-content: center;
+        gap: 25px;
+        padding: 15px;
+        
+        }
+    .gallery-images img {
+        width: 45%;
+        max-width: 250px;
+        height: auto;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    input,
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid darkgreen;
+        border-radius: 8px;
+        font-size: 16px;
+        }
+
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    button {
+        background-color: darkgreen;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        align-self: center;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+    button:hover {
+        background-color: darkcyan;
+    }
+    form label {
+        display: block;
+        font-weight: bold;
+        color: darkgreen;
+        margin-bottom: 5px;
+    }
+
+    input:focus,
+    textarea:focus {
+        outline: none;
+        border-color: darkcyan;
+        box-shadow: 0 0 5px darkcyan;
+    }
+    #contact h2 {
+        text-shadow: 2px 2px 3px gray;
+    }
+
+
+    @media (max-width: 600px) {
+        .gallery-images {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
