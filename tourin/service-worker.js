@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "tourin-shell-v4";
+const CACHE_NAME = "tourin-shell-v5";
 const APP_FILES = [
     "./",
     "./index.html",
@@ -11,7 +11,8 @@ const APP_FILES = [
     "./icons/tourin-192.png",
     "./icons/tourin-512.png",
     "./icons/apple-touch-icon.png",
-    "./icons/tourin.svg"
+    "./icons/tourin.svg",
+    "./images/cape-comorin-sunset.webp"
 ];
 
 self.addEventListener("install", (event) => {
