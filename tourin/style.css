@@ -523,26 +523,25 @@ select:focus-visible {
 }
 
 .tour-photo-banner {
-    display: flex;
-    width: fit-content;
+    width: 170px;
     max-width: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    margin: 0 auto 22px;
+    margin: 12px 0 0;
 }
 
 .tour-photo-banner img {
     display: block;
-    width: auto;
-    height: clamp(150px, 18vw, 200px);
-    max-width: 100%;
-    object-fit: contain;
+    width: 100%;
+    aspect-ratio: 1;
+    border: 2px solid #c5ddca;
+    border-radius: 12px;
+    object-fit: cover;
+    object-position: center 55%;
 }
 
 .tour-photo-banner figcaption {
+    margin-top: 5px;
     color: var(--muted);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
 }
 
@@ -1251,11 +1250,8 @@ td:first-child {
     }
 
     .tour-photo-banner {
-        margin-bottom: 18px;
-    }
-
-    .tour-photo-banner img {
-        height: clamp(150px, 45vw, 200px);
+        width: clamp(130px, 40vw, 170px);
+        margin-top: 10px;
     }
 
     .page-heading .button {
