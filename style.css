@@ -1,6 +1,8 @@
 </> CSS
 
-   html{}
+   html {
+    scroll_behaviour: smooth;
+   }
 
    * {
     box-sizing: border-box;
@@ -16,6 +18,7 @@
         font-size: 35px;
         text-align: center;
         text-shadow: 2px 2px 3px gray;
+        margin-bottom: 25px;
     }
     h2{
         color: darkgreen;
@@ -37,6 +40,8 @@
         margin-bottom: 25px;
         line-height: 1.6;
         text-align: center;
+        display: block;
+        transition: all 0.3s ease;
     }
 
     img {
@@ -46,10 +51,12 @@
         height: auto;
         margin-left: auto;
         margin-right: auto;
+        margin-bottom: 20px;
         border-radius: 15px;
         border: 3px solid darkgreen;
         box-shadow: 3px 3px 8px gray;
-        transition: transform 0.3s ease;       
+        transition: transform 0.3s ease;
+        animation: pictureAppear 1s ease-out;   
     }
 
     img:hover {
@@ -102,18 +109,40 @@
     nav {
         text-align: center;
         margin: 20px 0;
-        background-color: darkgreen;
+        background-color: rgba(0, 100, 0, 0.95);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
         padding: 10px;
+        margin-bottom: 20px;
         border-radius: 10px;
+        box-shadow: 3px 3px 8px gray;
     } 
     nav a{
         display: inline-block;
         margin: 0 10px;
         background-color: transparent;
         color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 8px;
         font-size: 18px;
         font-weight: bold;
         transition: background-color 0.3s ease;
+        transition:all 0.3s ease;
+    }
+    nav a:hover {
+        color: white;
+        transform: translateY(-5px);
+        background-color: rgba(255, 255, 255,0.15);
+        box-shadow: 0 0 12px lightcyan
+    }
+    nav a.active {
+        background-color: transparent;
+        color: white;
+        box-shadow: none;
+        transform: translateY(0);
+        transition:all 0.3s ease;
     }
     #about{
         background-color: white;
@@ -121,7 +150,7 @@
         padding: 20px;
         margin: 100px auto;
         border-radius: 20px;
-        width: 90%;
+        width: 90%;S
         max-width: 600px;
         box-shadow: 3px 3px 8px gray;
         transition: transform 0.3s ease;
@@ -153,13 +182,17 @@
     }
      #gallery {
                 text-align: center;
-            }
-            #gallery img {
-                display: inline-block;
-                width: 45%;
-                max-width: 250px;
-                margin: 10px;
-            }
+    }
+    #gallery img {
+        display: inline-block;
+        width: 45%;
+        max-width: 250px;
+        margin: 10px;
+        transition: all 0.5s ease-in-out;
+        border: 3px solid darkgreen;
+        box-shadow: 3px 3px 8px gray;
+       
+    }
     .gallery-images {
         display:flex;
         justify-content: center;
@@ -231,4 +264,104 @@
             flex-direction: column;
             align-items: center;
         }
+    }
+    .hero {
+        text-align: center;
+        background-color: lightcyan;
+        padding: 40px 20px;
+        border-radius: 20px;
+        margin: 50px 0;
+        width: 90%;
+        max-width: 700px;
+        box-shadow: 4px 4px 10px gray;
+        transition: transform 0.3s ease;
+    }
+    .hero:hover {
+        transform: translateY(-5px);
+    }
+    .hero a {
+        font-size: 18px;
+        padding: 12px 25px;
+    }
+    .hero h1 {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+    section {
+        scroll-margin-top:70px;
+    }
+    nav a.active:hover {
+        color: white;
+        background-color: rgba(255, 255, 255,0.15);
+        box-shadow: 0 0 12px lightcyan; 
+        transform: translateY(-5px);
+    }
+
+    body {
+        animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0;
+            }
+            to { opacity: 1; 
+            }
+        }
+    h1 {
+        animation: slideDown 1s ease-out;
+    }
+    @keyframes slideDown {
+        from {
+             opacity: 0;
+             transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+           
+        }
+    }
+    @keyframes pictureAppear {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    p {
+        animation: textAppear 1.2s ease-out;
+        }
+    @keyframes textAppear {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    p:hover {
+        color: red;
+        transform: translateY(-3px);
+        
+    }
+     #gallery img:hover {
+        box-shadow: 0 0 20px 5px lightcyan;
+        transform: translateY(-5px) scale(2.05);
+    }
+    #gallery h2 {
+        color: darkgreen;
+        text-align: center;
+        text-shadow: 2px 2px 4px gray;
+        margin-bottom: 25px;
+        padding: 10px;
+        
+    }
+    #gallery h2:hover {
+        color: darkcyan;
+        background color: lightcyan;
+        transition: color 0.3s ease;
     }

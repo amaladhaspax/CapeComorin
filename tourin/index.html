@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#173b35">
+    <meta name="description" content="Plan and enjoy a group visit to Cape Comorin with Tourin.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tourin">
+    <title>Tourin | Cape Comorin tours</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/tourin.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <main class="login-screen" id="login-screen">
+        <section class="login-card" aria-labelledby="login-title">
+            <a class="brand login-brand" href="#" aria-label="Tourin">
+                <span class="brand-mark" aria-hidden="true">T</span>
+                <span>
+                    <strong>tourin</strong>
+                    <small>CAPE COMORIN</small>
+                </span>
+            </a>
+            <p class="eyebrow">YOUR TOUR, YOUR WAY</p>
+            <h1 id="login-title">Welcome back</h1>
+            <p class="login-intro">Sign in to your Tourin workspace.</p>
+
+            <fieldset class="role-picker">
+                <legend>Choose your account type</legend>
+                <label class="role-option">
+                    <input type="radio" name="login-role" value="admin" checked>
+                    <span class="role-icon" aria-hidden="true">♧</span>
+                    <span><strong>Administrator</strong><small>Manage your tour</small></span>
+                </label>
+                <label class="role-option">
+                    <input type="radio" name="login-role" value="participant">
+                    <span class="role-icon" aria-hidden="true">◎</span>
+                    <span><strong>Participant</strong><small>View your trip</small></span>
+                </label>
+            </fieldset>
+
+            <form id="login-form" class="login-form" method="post">
+                <label class="field">
+                    <span>Email address</span>
+                    <input name="email" type="email" autocomplete="username" placeholder="you@example.com" required>
+                </label>
+                <label class="field">
+                    <span>Password</span>
+                    <input name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+                </label>
+                <button class="button button-primary login-submit" id="login-submit" type="submit" disabled>Sign in as administrator</button>
+                <p class="login-status" id="login-status" role="status" aria-live="polite">
+                    Checking Supabase configuration…
+                </p>
+            </form>
+
+            <button class="button button-outline install-button" id="install-app" type="button">Install Tourin</button>
+            <p class="install-status" id="install-status" role="status" aria-live="polite"></p>
+            <p class="login-footnote">Accounts are invite-only. Ask your tour administrator for access.</p>
+        </section>
+        <p class="login-copyright">Tourin · Cape Comorin</p>
+    </main>
+
+    <div class="app-shell" id="app-shell" hidden>
+        <aside class="sidebar">
+            <a class="brand" href="#dashboard" aria-label="Tourin home">
+                <span class="brand-mark" aria-hidden="true">T</span>
+                <span>
+                    <strong>tourin</strong>
+                    <small>CAPE COMORIN</small>
+                </span>
+            </a>
+
+            <p class="nav-label">WORKSPACE</p>
+            <nav class="main-nav" aria-label="Main navigation">
+                <button class="nav-link active" type="button" data-view="dashboard" data-roles="admin">
+                    <span aria-hidden="true">⌂</span> Overview
+                </button>
+                <button class="nav-link" type="button" data-view="participant-home" data-roles="participant">
+                    <span aria-hidden="true">⌂</span> My trip
+                </button>
+                <button class="nav-link" type="button" data-view="participants" data-roles="admin">
+                    <span aria-hidden="true">♧</span> Participants
+                </button>
+                <button class="nav-link" type="button" data-view="places" data-roles="admin,participant">
+                    <span aria-hidden="true">⌖</span> Places
+                </button>
+                <button class="nav-link" type="button" data-view="schedule" data-roles="admin">
+                    <span aria-hidden="true">▦</span> Schedule
+                </button>
+                <button class="nav-link" type="button" data-view="participant-schedule" data-roles="participant">
+                    <span aria-hidden="true">▦</span> Schedule
+                </button>
+                <button class="nav-link" type="button" data-view="lodges" data-roles="admin,participant">
+                    <span aria-hidden="true">⌂</span> Lodging
+                </button>
+                <button class="nav-link" type="button" data-view="location" data-roles="admin,participant">
+                    <span aria-hidden="true">◎</span> Location sharing
+                </button>
+            </nav>
+
+            <div class="sidebar-note">
+                <span class="status-dot" aria-hidden="true"></span>
+                <div>
+                    <strong>Shared trip workspace</strong>
+                    <p>Schedules and lodging are shared with signed-in participants.</p>
+                </div>
+            </div>
+            <p class="sidebar-footer">A better way to explore the southern coast.</p>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="breadcrumbs">Cape Comorin <span>/</span> <span id="workspace-label">Workspace</span></div>
+                <div class="topbar-right">
+                    <span class="prototype-tag">SHARED TRIP DATA</span>
+                    <span class="account-label" id="account-label"></span>
+                    <span class="auth-message" id="auth-message" role="status" aria-live="polite"></span>
+                    <button class="install-button install-button-compact" id="install-app-workspace" type="button">Install app</button>
+                    <button class="sign-out-button" id="sign-out" type="button">Sign out</button>
+                    <div class="admin-avatar" id="account-avatar" aria-hidden="true">A</div>
+                </div>
+            </header>
+
+            <div class="content-wrap">
+                <section class="view active" id="dashboard-view" aria-labelledby="dashboard-title">
+                    <div class="page-heading">
+                        <div>
+                            <p class="eyebrow">YOUR TOUR, AT A GLANCE</p>
+                            <h1 id="dashboard-title" tabindex="-1">Welcome to Tourin</h1>
+                            <p class="muted">Plan a smoother visit to Cape Comorin and keep your group organised.</p>
+                        </div>
+                        <button class="button button-primary" type="button" data-open-view="schedule">＋ Create a schedule</button>
+                    </div>
+
+                    <div class="stats-grid">
+                        <article class="stat-card">
+                            <span class="stat-icon green" aria-hidden="true">♧</span>
+                            <p>Participants</p>
+                            <strong id="participant-count">0</strong>
+                            <small>In the group directory</small>
+                        </article>
+                        <article class="stat-card">
+                            <span class="stat-icon gold" aria-hidden="true">▦</span>
+                            <p>Planned visits</p>
+                            <strong id="schedule-count">0</strong>
+                            <small>Planned visits</small>
+                        </article>
+                        <article class="stat-card">
+                            <span class="stat-icon blue" aria-hidden="true">⌖</span>
+                            <p>Places to explore</p>
+                            <strong id="place-count">3</strong>
+                            <small>Cape Comorin highlights</small>
+                        </article>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <p class="eyebrow">GETTING STARTED</p>
+                                    <h2>Plan your group visit</h2>
+                                </div>
+                                <span class="heading-icon" aria-hidden="true">✦</span>
+                            </div>
+                            <div class="checklist">
+                                <button type="button" data-open-view="participants"><span>01</span><span><strong>Add participants</strong><small>Keep the group contact list organised.</small></span><b aria-hidden="true">→</b></button>
+                                <button type="button" data-open-view="places"><span>02</span><span><strong>Choose places</strong><small>Explore nearby sights with map links.</small></span><b aria-hidden="true">→</b></button>
+                                <button type="button" data-open-view="schedule"><span>03</span><span><strong>Set a schedule</strong><small>Plan dates, times, and stops.</small></span><b aria-hidden="true">→</b></button>
+                            </div>
+                        </article>
+                        <article class="panel location-promo">
+                            <span class="promo-icon" aria-hidden="true">◎</span>
+                            <p class="eyebrow">OPTIONAL · DEVICE ONLY</p>
+                            <h2>Share your location</h2>
+                            <p class="muted">Try your device's location while this page is open. This prototype does not send it to an administrator.</p>
+                            <button class="button button-outline" type="button" data-open-view="location">Location settings <span aria-hidden="true">→</span></button>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="view" id="participant-home-view" aria-labelledby="participant-home-title" hidden>
+                    <div class="page-heading">
+                        <div>
+                            <p class="eyebrow">YOUR CAPE COMORIN VISIT</p>
+                            <h1 id="participant-home-title" tabindex="-1">Your trip</h1>
+                            <p class="muted">Explore places and manage your optional location sharing.</p>
+                        </div>
+                        <button class="button button-primary" type="button" data-open-view="places">Explore places</button>
+                    </div>
+                    <div class="notice" role="note">
+                        <strong>Your tour information.</strong>
+                        <span>View the itinerary and city-wise lodging directory maintained by your administrator.</span>
+                    </div>
+                    <div class="dashboard-grid participant-dashboard-grid">
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div><p class="eyebrow">PLAN YOUR DAY</p><h2>Discover the coast</h2></div>
+                                <span class="heading-icon" aria-hidden="true">✦</span>
+                            </div>
+                            <p class="muted participant-card-copy">See local highlights and open directions in Google Maps.</p>
+                            <button class="button button-outline" type="button" data-open-view="places">Browse places <span aria-hidden="true">→</span></button>
+                        </article>
+                        <article class="panel location-promo">
+                            <span class="promo-icon" aria-hidden="true">◎</span>
+                            <p class="eyebrow">OPTIONAL · DEVICE ONLY</p>
+                            <h2>Location sharing</h2>
+                            <p class="muted">Only share while the app is open. This prototype does not send your location to anyone.</p>
+                            <button class="button button-outline" type="button" data-open-view="location">Location settings <span aria-hidden="true">→</span></button>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="view" id="participants-view" aria-labelledby="participants-title" hidden>
+                    <div class="page-heading">
+                        <div>
+                            <p class="eyebrow">GROUP DIRECTORY</p>
+                            <h1 id="participants-title" tabindex="-1">Participants</h1>
+                            <p class="muted">Keep your group's contact details organised.</p>
+                        </div>
+                    </div>
+                    <div class="notice" role="note">
+                        <strong>Administrator-only directory.</strong>
+                        <span>Participant names, phone numbers, and addresses are stored securely and are not visible to participant accounts.</span>
+                    </div>
+                    <div class="panel form-panel">
+                        <div class="panel-heading">
+                            <div><p class="eyebrow">NEW ENTRY</p><h2>Participant details</h2></div>
+                        </div>
+                        <form id="participant-form" class="form-grid">
+                            <label class="field">
+                                <span>Full name</span>
+                                <input name="name" type="text" autocomplete="off" maxlength="100" placeholder="e.g. Alex Kumar" required>
+                            </label>
+                            <label class="field">
+                                <span>Phone number</span>
+                                <input name="phone" type="tel" autocomplete="off" maxlength="30" placeholder="e.g. +91 98765 43210" required>
+                            </label>
+                            <label class="field field-full">
+                                <span>Address</span>
+                                <textarea name="address" rows="2" maxlength="250" placeholder="Participant address" required></textarea>
+                            </label>
+                            <div class="form-actions field-full">
+                                <button class="button button-primary" type="submit">Add participant</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel table-panel">
+                        <div class="panel-heading">
+                            <div><p class="eyebrow">GROUP DIRECTORY</p><h2>Participant list</h2></div>
+                            <span class="count-pill" id="participant-list-count">0 people</span>
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead><tr><th>Name</th><th>Phone</th><th>Address</th><th><span class="sr-only">Actions</span></th></tr></thead>
+                                <tbody id="participant-list"></tbody>
+                            </table>
+                            <p class="empty-state" id="participant-empty">No participants added yet.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="view" id="places-view" aria-labelledby="places-title" hidden>
+                    <div class="page-heading">
+                        <div>
+                            <p class="eyebrow">LOCAL HIGHLIGHTS</p>
+                            <h1 id="places-title" tabindex="-1">Places to explore</h1>
+                            <p class="muted">A few well-known stops around Kanyakumari, with directions in Google Maps.</p>
+                        </div>
+                    </div>
+                    <div class="places-grid" id="places-list"></div>
+                    <p class="map-note">Map links open Google Maps. Location links do not track visitors.</p>
+                </section>
+
+                <section class="view" id="schedule-view" aria-labelledby="schedule-title" hidden>
+                    <div class="page-heading">
+                        <div>
+                            <p class="eyebrow">TRIP ORGANISER</p>
+                            <h1 id="schedule-title" tabindex="-1">Schedule</h1>
+                            <p class="muted">Plan each visit with a date, time range, and place.</p>
+                        </div>
+                    </div>
+                    <div class="panel form-panel">
+                        <div class="panel-heading">
+                            <div><p class="eyebrow">PLAN A STOP</p><h2>New schedule item</h2></div>
+                        </div>
+                        <form id="schedule-form" class="form-grid">
+                            <label class="field">
+                                <span>Activity</span>
+                                <input name="activity" type="text" maxlength="100" placeholder="e.g. Sunrise visit" required>
+                            </label>
+                            <label class="field">
+                                <span>Place</span>
+                                <select name="place" id="schedule-place" required></select>
+                            </label>
+                            <label class="field">
+                                <span>Date</span>
+                                <input name="date" type="date" required>
+                            </label>
+                            <label class="field">
+                                <span>From</span>
+                                <input name="start_time" type="time" required>
+                            </label>
+                            <label class="field">
+                                <span>To</span>
+                                <input name="end_time" type="time" required>
+                            </label>
+                            <div class="form-actions field-full">
+                                <button class="button button-primary" type="submit">Add to schedule</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel table-panel">
+                        <div class="panel-heading">
+                            <div><p class="eyebrow">UPCOMING</p><h2>Planned activities</h2></div>
+                            <span class="count-pill" id="schedule-list-count">0 activities</span>
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead><tr><th>Date</th><th>Time</th><th>Activity</th><th>Place</th><th><span class="sr-only">Actions</span></th></tr></thead>
+                                <tbody id="schedule-list"></tbody>
+                            </table>
+                            <p class="empty-state" id="schedule-empty">No activities planned yet.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="view" id="participant-schedule-view" aria-labelledby="participant-schedule-title" hidden>
+                    <div class="page-heading">
+                        <div>
+                            <p class="eyebrow">YOUR TOUR ITINERARY</p>
+                            <h1 id="participant-schedule-title" tabindex="-1">Schedule</h1>
+                            <p class="muted">Check your group's planned activities.</p>
+                        </div>
+                    </div>
+                    <div class="panel table-panel">
+                        <div class="panel-heading">
+                            <div><p class="eyebrow">UPCOMING</p><h2>Planned activities</h2></div>
+                            <span class="count-pill" id="participant-schedule-list-count">0 activities</span>
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead><tr><th>Date</th><th>Time</th><th>Activity</th><th>Place</th></tr></thead>
+                                <tbody id="participant-schedule-list"></tbody>
+                            </table>
+                            <p class="empty-state" id="participant-schedule-empty">No activities planned yet.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="view" id="lodges-view" aria-labelledby="lodges-title" hidden>
+                    <div class="page-heading">
+                        <div>
+                            <p class="eyebrow">STAY DIRECTORY</p>
+                            <h1 id="lodges-title" tabindex="-1">Lodging</h1>
+                            <p class="muted">Find the group's recommended accommodation by city.</p>
+                        </div>
+                    </div>
+                    <div class="panel form-panel" id="lodge-admin-form">
+                        <div class="panel-heading">
+                            <div><p class="eyebrow">NEW LODGE</p><h2>Add accommodation</h2></div>
+                        </div>
+                        <form id="lodge-form" class="form-grid">
+                            <label class="field">
+                                <span>City</span>
+                                <input name="city" type="text" maxlength="100" placeholder="e.g. Kanyakumari" required>
+                            </label>
+                            <label class="field">
+                                <span>Lodge name</span>
+                                <input name="name" type="text" maxlength="150" placeholder="e.g. Seaview Lodge" required>
+                            </label>
+                            <label class="field">
+                                <span>Phone number</span>
+                                <input name="phone" type="tel" maxlength="30" placeholder="e.g. +91 98765 43210" required>
+                            </label>
+                            <label class="field">
+                                <span>Address</span>
+                                <textarea name="address" rows="2" maxlength="250" placeholder="Street address and area" required></textarea>
+                            </label>
+                            <div class="form-actions field-full">
+                                <button class="button button-primary" type="submit">Add lodge</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel table-panel">
+                        <div class="panel-heading">
+                            <div><p class="eyebrow">CITY-WISE DIRECTORY</p><h2>Places to stay</h2></div>
+                            <span class="count-pill" id="lodge-list-count">0 lodges</span>
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead><tr><th>City</th><th>Lodge</th><th>Phone</th><th>Address</th><th><span class="sr-only">Actions</span></th></tr></thead>
+                                <tbody id="lodge-list"></tbody>
+                            </table>
+                            <p class="empty-state" id="lodge-empty">No lodging options added yet.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="view" id="location-view" aria-labelledby="location-title" hidden>
+                    <div class="page-heading">
+                        <div>
+                            <p class="eyebrow">OPTIONAL · DEVICE ONLY</p>
+                            <h1 id="location-title" tabindex="-1">Location sharing</h1>
+                            <p class="muted">Try browser location sharing on this device while this page remains open.</p>
+                        </div>
+                    </div>
+                    <div class="location-layout">
+                        <article class="panel location-panel">
+                            <span class="location-illustration" aria-hidden="true">◎</span>
+                            <p class="eyebrow">YOU ARE IN CONTROL</p>
+                            <h2>Share this device's location</h2>
+                            <p class="muted">Your browser will ask for permission. Sharing starts only after you press the button and approve it. Stop at any time. This demo does not transmit or save your location, and no administrator can see it.</p>
+                            <button class="button button-primary" id="location-toggle" type="button">Start location sharing</button>
+                            <p class="location-status" id="location-status" role="status" aria-live="polite">Location sharing is off.</p>
+                            <div class="coordinates" id="coordinates" hidden>
+                                <span>Latest device location</span>
+                                <strong id="coordinate-value">Waiting for location…</strong>
+                                <a id="map-link" href="#" target="_blank" rel="noopener noreferrer">Open this location in Google Maps ↗</a>
+                            </div>
+                        </article>
+                        <aside class="panel privacy-panel">
+                            <p class="eyebrow">PRIVACY FIRST</p>
+                            <h2>What this demo does</h2>
+                            <ul>
+                                <li>Requests location only after you press “Start”.</li>
+                                <li>Uses the browser while this page is open.</li>
+                                <li>Stops watching when you stop sharing or leave the page.</li>
+                                <li>Keeps coordinates on this device's page only.</li>
+                            </ul>
+                            <p class="privacy-footnote">For a real group-location feature, participants would need clear consent and an authenticated, secure service to share location with an authorised administrator.</p>
+                        </aside>
+                    </div>
+                </section>
+            </div>
+            <footer class="main-footer"><span>Tourin · Cape Comorin</span><span>Sign-in and trip data require an internet connection.</span></footer>
+        </main>
+    </div>
+</body>
+</html>
